@@ -1,9 +1,10 @@
-import { StyleSheet, Text, View } from "react-native";
+import SignUpScreen from "@/components/Auth/SignUp";
+import { StyleSheet, View } from "react-native";
 
 export default function Index() {
   return (
     <View style={styles.container}>
-      <Text>FOODIEZ APP</Text>
+      <SignUpScreen />
     </View>
   );
 }
