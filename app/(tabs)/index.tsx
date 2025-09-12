@@ -1,6 +1,6 @@
-import HomeScreen from "@/components/Auth/(Tabs)/Home";
+import HomeScreen from "@/components/(Tabs)/Home";
 import React from "react";
 
-export const home = () => {
+export default function Home() {
   return <HomeScreen />;
-};
+}

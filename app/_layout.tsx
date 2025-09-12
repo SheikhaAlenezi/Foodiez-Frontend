@@ -19,12 +19,20 @@ export default function RootLayout() {
   useEffect(() => {
     checkToken();
   });
-
+  //landingPage
   return (
     <QueryClientProvider client={queryClient}>
       <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated }}>
         <Stack screenOptions={{ headerTintColor: "purple" }}>
           <Stack.Screen name="index" options={{ headerShown: false }} />
+          <Stack.Screen
+            name="auth/signIn"
+            options={{
+              title: "SignIn",
+              headerBackTitle: "Main",
+              headerShown: false,
+            }}
+          />
           <Stack.Screen
             name="auth/signUp"
             options={{

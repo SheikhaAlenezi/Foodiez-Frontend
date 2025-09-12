@@ -29,7 +29,7 @@ const SignUpScreen = () => {
     mutationFn: signUp,
     onSuccess: () => {
       setIsAuthenticated(true);
-      router.dismissTo("./(tabs)");
+      router.replace("/(tabs)");
     },
     onError: (err: any) => {
       Alert.alert("signup failed", err.message || "try later aligator");
@@ -127,10 +127,10 @@ const SignUpScreen = () => {
             <TouchableOpacity onPress={handleSignUp} style={styles.button}>
               <Text style={styles.buttonText}>Create Account</Text>
             </TouchableOpacity>
-            <Text>Already have an account?</Text>
-            {/* <TouchableOpacity onPress={()=>router.dismissTo("/auth/signin")}>
-              <Text style={{fontWeight:"bold"}}>log in</Text>
-            </TouchableOpacity> */}
+            <Text>Have an account?</Text>
+            <TouchableOpacity onPress={() => router.dismissTo("./auth/signin")}>
+              <Text style={{ fontWeight: "bold", color: "purple" }}>logIn</Text>
+            </TouchableOpacity>
           </View>
         </View>
       </ScrollView>
@@ -142,7 +142,7 @@ export default SignUpScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 120,
+    paddingHorizontal: 40, //here
     justifyContent: "center",
     backgroundColor: "#eec3fcff",
   },
@@ -165,12 +165,13 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     fontWeight: "bold",
     alignSelf: "center",
+    color: "purple",
   },
 
   card: {
     backgroundColor: "#fff",
-    padding: 20,
-    borderRadius: 12,
+    padding: 15, //here
+    borderRadius: 20, //here
     shadowColor: "#000",
     shadowOpacity: 0.1,
     shadowOffset: { width: 0, height: 4 },
@@ -184,7 +185,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: "600",
     marginBottom: 5,
-    color: "#333",
+    color: "purple",
   },
   inputText: {
     borderWidth: 1,
@@ -198,7 +199,7 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: "purple",
     padding: 15,
-    borderRadius: 8,
+    borderRadius: 10,
     alignItems: "center",
   },
   buttonText: {
