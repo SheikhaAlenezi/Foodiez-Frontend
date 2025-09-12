@@ -1,5 +1,49 @@
+import { getToken } from "@/api/storage";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Stack } from "expo-router";
+import { useEffect, useState } from "react";
+import { AuthContext } from "./context/AuthContext";
 
 export default function RootLayout() {
-  return <Stack />;
+  const queryClient = new QueryClient();
+  const [isAuthenticated, setIsAuthenticated] = useState(true);
+  console.log(isAuthenticated);
+
+  const checkToken = async () => {
+    const token = await getToken(); //storage token
+    if (!token) {
+      setIsAuthenticated(true);
+      console.log(token);
+    }
+  };
+  useEffect(() => {
+    checkToken();
+  });
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated }}>
+        <Stack screenOptions={{ headerTintColor: "purple" }}>
+          <Stack.Screen name="index" options={{ headerShown: false }} />
+          <Stack.Screen
+            name="auth/signUp"
+            options={{
+              title: "SignUp",
+              headerBackTitle: "Main",
+              headerShown: false,
+            }}
+          />
+          <Stack.Protected guard={isAuthenticated}>
+            <Stack.Screen
+              name="(tabs)"
+              options={{
+                headerBackVisible: false,
+                headerShown: false,
+              }}
+            />
+          </Stack.Protected>
+        </Stack>
+      </AuthContext.Provider>
+    </QueryClientProvider>
+  );
 }

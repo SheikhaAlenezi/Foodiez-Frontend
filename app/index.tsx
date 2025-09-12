@@ -1,12 +1,8 @@
 import SignUpScreen from "@/components/Auth/SignUp";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet } from "react-native";
 
 export default function Index() {
-  return (
-    <View style={styles.container}>
-      <SignUpScreen />
-    </View>
-  );
+  return <SignUpScreen />;
 }
 
 const styles = StyleSheet.create({
