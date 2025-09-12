@@ -17,7 +17,7 @@ import {
 } from "react-native";
 import * as Yup from "yup";
 
-const SignUpScreen = () => {
+const SignInScreen = () => {
   const { isAuthenticated, setIsAuthenticated } = useContext(AuthContext);
   const [username, setUsername] = useState("");
 
@@ -113,7 +113,7 @@ const SignUpScreen = () => {
   );
 };
 
-export default SignUpScreen;
+export default SignInScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
