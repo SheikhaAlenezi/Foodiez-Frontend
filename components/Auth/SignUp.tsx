@@ -1,5 +1,5 @@
 import { signUp } from "@/api/auth";
-import { AuthContext } from "@/app/context/AuthContext";
+import { AuthContext } from "@/context/AuthContext";
 import { useMutation } from "@tanstack/react-query";
 import { router } from "expo-router";
 import React, { useContext, useState } from "react";
@@ -27,7 +27,7 @@ const SignUpScreen = () => {
   const { mutate } = useMutation({
     mutationKey: ["signup"],
     mutationFn: signUp,
-    onSuccess: () => {
+    onSuccess: (data) => {
       setIsAuthenticated(true);
       router.replace("/(tabs)");
     },

@@ -2,7 +2,7 @@ import { AuthContext } from "@/context/AuthContext";
 import { useContext } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
-export default function HomeScreen() {
+export default function ProfileScreen() {
   const { signout } = useContext(AuthContext);
 
   return (
@@ -10,7 +10,7 @@ export default function HomeScreen() {
       <TouchableOpacity onPress={signout} style={styles.signout}>
         <Text style={styles.signoutText}> SIGN OUT</Text>
       </TouchableOpacity>
-      <Text>Home Page </Text>
+      <Text>Profile</Text>
     </View>
   );
 }

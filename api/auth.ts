@@ -5,13 +5,13 @@ import { storeToken } from "./storage";
 export const signUp = async (userInfo: SignUpInfo) => {
   const res = await instance.post("/users/signup", userInfo);
   await storeToken(res.data.token);
-  return res;
+  return res.data;
 };
 
 export const signIn = async (userInfo: SignInInfo) => {
   const res = await instance.post("/users/signin", userInfo);
   await storeToken(res.data.token);
-  return res;
+  return res.data;
 };
 
 export const getUsers = async () => {

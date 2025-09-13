@@ -1,5 +1,5 @@
 import { signIn } from "@/api/auth";
-import { AuthContext } from "@/app/context/AuthContext";
+import { AuthContext } from "@/context/AuthContext";
 import { useMutation } from "@tanstack/react-query";
 import { router } from "expo-router";
 import React, { useContext, useState } from "react";
@@ -20,14 +20,13 @@ import * as Yup from "yup";
 const SignInScreen = () => {
   const { isAuthenticated, setIsAuthenticated } = useContext(AuthContext);
   const [username, setUsername] = useState("");
-
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
   const { mutate } = useMutation({
     mutationKey: ["signin"],
     mutationFn: signIn,
-    onSuccess: () => {
+    onSuccess: (data) => {
       setIsAuthenticated(true);
       router.replace("/(tabs)");
     },
@@ -45,11 +44,7 @@ const SignInScreen = () => {
 
   const handleSignUp = async () => {
     try {
-      await SignUpSchema.validate({
-        username,
-
-        password,
-      });
+      await SignUpSchema.validate({ username, password });
       mutate({ username, password });
     } catch (err: any) {
       Alert.alert("error", err.message);
