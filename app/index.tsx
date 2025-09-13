@@ -1,9 +1,9 @@
-import { StyleSheet, Text, View } from "react-native";
-
+import CategoryItem from "@/components/CategoryItem";
+import { StyleSheet, View } from "react-native";
 export default function Index() {
   return (
     <View style={styles.container}>
-      <Text>FOODIEZ APP</Text>
+      <CategoryItem />
     </View>
   );
 }
