@@ -11,7 +11,24 @@ const _layout = () => {
   //   router.dismissTo("/landingPage");
   // };
   return (
-    <Tabs screenOptions={{ tabBarShowLabel: false, headerShown: false }}>
+    <Tabs
+      screenOptions={{
+        headerShown: false,
+        tabBarShowLabel: false,
+        tabBarActiveTintColor: "rgba(255, 255, 255, 0.9)",
+        tabBarInactiveTintColor: "rgba(255, 255, 255, 0.9)",
+        tabBarStyle: {
+          backgroundColor: "#E0B0FF",
+          paddingTop: 10,
+          borderTopLeftRadius: 50,
+          borderTopRightRadius: 50,
+          overflow: "hidden",
+          position: "absolute",
+          left: 10,
+          right: 10,
+        },
+      }}
+    >
       <Tabs.Screen
         name="index"
         options={{
@@ -19,7 +36,7 @@ const _layout = () => {
             <MaterialCommunityIcons
               name="home-outline"
               size={26}
-              color="purple"
+              color="rgba(255, 255, 255, 0.9)"
             />
           ),
         }}
@@ -28,7 +45,11 @@ const _layout = () => {
         name="recipe"
         options={{
           tabBarIcon: ({ color, size }) => (
-            <MaterialIcons name="add-circle-outline" size={25} color="purple" />
+            <MaterialIcons
+              name="add-circle-outline"
+              size={25}
+              color="rgba(255, 255, 255, 0.9)"
+            />
           ),
         }}
       />
@@ -37,7 +58,25 @@ const _layout = () => {
         name="profile"
         options={{
           tabBarIcon: ({ color, size }) => (
-            <FontAwesome5 name="user" size={24} color="purple" />
+            <FontAwesome5
+              name="user"
+              size={24}
+              color="rgba(255, 255, 255, 0.9)"
+            />
+          ),
+        }}
+      />
+
+      <Tabs.Screen
+        name="createnew"
+        options={{
+          href: null,
+          tabBarIcon: ({ color, size }) => (
+            <FontAwesome5
+              name="user"
+              size={24}
+              color="rgba(255, 255, 255, 0.9)"
+            />
           ),
         }}
       />
