@@ -9,4 +9,8 @@ interface SignInInfo {
   username: string;
   password: string;
 }
-export { SignInInfo, SignUpInfo };
+interface UserInfo {
+  username: string;
+  email: string;
+}
+export { SignInInfo, SignUpInfo, UserInfo };

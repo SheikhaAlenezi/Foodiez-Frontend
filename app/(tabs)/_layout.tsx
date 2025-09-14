@@ -15,7 +15,7 @@ const _layout = () => {
       screenOptions={{
         headerShown: false,
         tabBarShowLabel: false,
-        tabBarActiveTintColor: "rgba(255, 255, 255, 0.9)",
+        tabBarActiveTintColor: "purple",
         tabBarInactiveTintColor: "rgba(255, 255, 255, 0.9)",
         tabBarStyle: {
           backgroundColor: "#E0B0FF",
@@ -36,7 +36,7 @@ const _layout = () => {
             <MaterialCommunityIcons
               name="home-outline"
               size={26}
-              color="rgba(255, 255, 255, 0.9)"
+              color={color}
             />
           ),
         }}
@@ -45,11 +45,7 @@ const _layout = () => {
         name="recipe"
         options={{
           tabBarIcon: ({ color, size }) => (
-            <MaterialIcons
-              name="add-circle-outline"
-              size={25}
-              color="rgba(255, 255, 255, 0.9)"
-            />
+            <MaterialIcons name="add-circle-outline" size={25} color={color} />
           ),
         }}
       />
@@ -58,11 +54,7 @@ const _layout = () => {
         name="profile"
         options={{
           tabBarIcon: ({ color, size }) => (
-            <FontAwesome5
-              name="user"
-              size={24}
-              color="rgba(255, 255, 255, 0.9)"
-            />
+            <FontAwesome5 name="user" size={24} color={color} />
           ),
         }}
       />
@@ -72,12 +64,14 @@ const _layout = () => {
         options={{
           href: null,
           tabBarIcon: ({ color, size }) => (
-            <FontAwesome5
-              name="user"
-              size={24}
-              color="rgba(255, 255, 255, 0.9)"
-            />
+            <FontAwesome5 name="user" size={24} color={color} />
           ),
+        }}
+      />
+      <Tabs.Screen
+        name="category"
+        options={{
+          href: null,
         }}
       />
     </Tabs>

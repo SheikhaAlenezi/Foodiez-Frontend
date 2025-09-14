@@ -27,7 +27,10 @@ export default function RecipeScreen() {
               Share your favorite dish with the community!
             </Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => router.push("/(tabs)/category")}
+          >
             <View style={styles.icon}>
               <Ionicons
                 name="albums-outline"

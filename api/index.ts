@@ -2,7 +2,7 @@ import axios from "axios";
 import { getToken } from "./storage";
 
 const instance = axios.create({
-  baseURL: "http://172.20.10.3:8000/api",
+  baseURL: "http://192.168.7.112:8000/api",
 });
 // little-shaikha "http://:8000/api"
 //
