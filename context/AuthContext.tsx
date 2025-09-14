@@ -7,19 +7,19 @@ interface AuthContextType {
   isAuthenticated: boolean;
   setIsAuthenticated: (isAuthenticated: boolean) => void;
   signout: () => Promise<void>;
-  user: UserInfo | null;
-  setUser: (user: UserInfo | null) => void;
-  signin: (values: SignInInfo) => Promise<void>;
+  // user: UserInfo | null;
+  // setUser: (user: UserInfo | null) => void;
+  // signin: (values: SignInInfo) => Promise<void>;
 }
 
 export const AuthContext = createContext<AuthContextType>({
   isAuthenticated: false,
   setIsAuthenticated: () => {},
   signout: async () => {},
-  user: null,
+  // user: null,
 
-  setUser: () => {},
-  signin: async () => {},
+  // setUser: () => {},
+  // signin: async () => {},
 });
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
@@ -72,9 +72,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         isAuthenticated,
         setIsAuthenticated,
         signout,
-        user,
-        setUser,
-        signin,
+        // user,
+        // setUser,
+        // signin,
       }}
     >
       {children}

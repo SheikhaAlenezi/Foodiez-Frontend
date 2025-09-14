@@ -1,6 +1,7 @@
 import { signIn } from "@/api/auth";
 import { AuthContext } from "@/context/AuthContext";
 import { useMutation } from "@tanstack/react-query";
+import { AxiosError } from "axios";
 import { router } from "expo-router";
 import React, { useContext, useState } from "react";
 import {
@@ -30,7 +31,8 @@ const SignInScreen = () => {
       setIsAuthenticated(true);
       router.replace("/(tabs)");
     },
-    onError: (err: any) => {
+    onError: (err: AxiosError) => {
+      console.log(err.message, err.cause);
       Alert.alert("signin failed", err.message || "try later aligator");
     },
   });

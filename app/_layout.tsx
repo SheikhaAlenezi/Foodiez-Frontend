@@ -8,6 +8,8 @@ import { AuthContext } from "../context/AuthContext";
 export default function RootLayout() {
   const queryClient = useMemo(() => new QueryClient(), []);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
+  // const [user, setUser] = useState("");
+
   console.log(isAuthenticated);
 
   useEffect(() => {
@@ -29,6 +31,14 @@ export default function RootLayout() {
   if (isAuthenticated === null) {
     return null;
   }
+  // const signin = async () => {
+  //   await SecureStore.deleteItemAsync("token");
+  //   setIsAuthenticated(false);
+  // };
+  // if (isAuthenticated === null) {
+  //   return null;
+  // }
+
   //landingPage
   return (
     <QueryClientProvider client={queryClient}>
