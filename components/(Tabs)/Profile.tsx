@@ -33,18 +33,6 @@ export default function ProfileScreen() {
     </View>
   );
 }
-// const styles = StyleSheet.create({
-//   container: { flex: 1, paddingTop: 80, alignItems: "center" },
-//   signout: {
-//     position: "absolute",
-//     top: 40,
-//     right: 20,
-//     paddingVertical: 8,
-//     paddingHorizontal: 12,
-//     borderRadius: 8,
-//   },
-//   signoutText: { color: "purple", fontWeight: "bold" },
-// });
 
 const styles = StyleSheet.create({
   background: {

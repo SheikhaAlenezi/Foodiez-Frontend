@@ -1,28 +1,59 @@
-import { AuthContext } from "@/context/AuthContext";
-import { useContext } from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { useState } from "react";
+import { ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import CategoriesList from "../CategoriesList";
 
 export default function HomeScreen() {
-  const { signout } = useContext(AuthContext);
+  const [search, setSearch] = useState("");
 
   return (
-    <View style={styles.container}>
-      <TouchableOpacity onPress={signout} style={styles.signout}>
-        <Text style={styles.signoutText}> SIGN OUT</Text>
-      </TouchableOpacity>
-      <Text>Home Page </Text>
-    </View>
+    <SafeAreaView style={styles.container}>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <View style={styles.searchContainer}>
+          <TextInput
+            style={styles.searchInput}
+            placeholder="Search recipes"
+            placeholderTextColor="#999"
+            value={search}
+            onChangeText={setSearch}
+          />
+        </View>
+
+        <CategoriesList />
+
+        <Text style={styles.sectionTitle}>Popular Recipes</Text>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
+
 const styles = StyleSheet.create({
-  container: { flex: 1, paddingTop: 80, alignItems: "center" },
-  signout: {
-    position: "absolute",
-    top: 40,
-    right: 20,
-    paddingVertical: 8,
-    paddingHorizontal: 12,
-    borderRadius: 8,
+  container: {
+    flex: 1,
+    backgroundColor: "#f8f8f8",
+    paddingTop: 20,
   },
-  signoutText: { color: "purple", fontWeight: "bold" },
+  searchContainer: {
+    marginHorizontal: 20,
+    marginBottom: 15,
+  },
+  searchInput: {
+    backgroundColor: "#fff",
+    borderRadius: 15,
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+    fontSize: 16,
+    shadowColor: "#000",
+    shadowOpacity: 0.1,
+    shadowRadius: 5,
+    elevation: 3,
+  },
+  sectionTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginHorizontal: 20,
+    marginTop: 25,
+    marginBottom: 10,
+    color: "#333",
+  },
 });

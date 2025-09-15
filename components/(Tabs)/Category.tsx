@@ -1,3 +1,4 @@
+import { createCategory } from "@/api/category";
 import React, { useState } from "react";
 import {
   Keyboard,
@@ -181,12 +182,23 @@ const CategoryScreen = () => {
                         </View>
                         <TouchableOpacity
                           style={[styles.button, styles.createButton]}
-                          onPress={() => {
-                            setShowPreview(false);
-                            console.log("Category Created:", {
-                              selectedColor,
-                              selectedIcon,
-                            });
+                          onPress={async () => {
+                            try {
+                              const res = await createCategory({
+                                name: categoryName,
+                                description,
+                                color: selectedColor,
+                                icon: selectedIcon,
+                              });
+                              console.log("saved", res.data);
+                              setShowPreview(false);
+                              setCategoryName("");
+                              setDescription("");
+                              setSelectedColor("");
+                              setSelectedIcon("");
+                            } catch (err) {
+                              console.log("error saving", err);
+                            }
                           }}
                         >
                           <Text
