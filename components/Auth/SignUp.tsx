@@ -131,7 +131,7 @@ const SignUpScreen = () => {
               <Text style={styles.buttonText}>Create Account</Text>
             </TouchableOpacity>
             <Text>Have an account?</Text>
-            <TouchableOpacity onPress={() => router.dismissTo("./auth/signin")}>
+            <TouchableOpacity onPress={() => router.dismissTo("/auth/signIn")}>
               <Text style={{ fontWeight: "bold", color: "purple" }}>logIn</Text>
             </TouchableOpacity>
           </View>
