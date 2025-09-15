@@ -31,13 +31,6 @@ export default function RootLayout() {
   if (isAuthenticated === null) {
     return null;
   }
-  // const signin = async () => {
-  //   await SecureStore.deleteItemAsync("token");
-  //   setIsAuthenticated(false);
-  // };
-  // if (isAuthenticated === null) {
-  //   return null;
-  // }
 
   //landingPage
   return (
@@ -61,6 +54,10 @@ export default function RootLayout() {
               headerShown: false,
             }}
           />
+          {/* <Stack.Screen
+            name="Auth/CategoryRecipes"
+            options={{ title: "CategoryRecipe", headerShown: false }}
+          /> */}
           <Stack.Protected guard={isAuthenticated}>
             <Stack.Screen
               name="(tabs)"
