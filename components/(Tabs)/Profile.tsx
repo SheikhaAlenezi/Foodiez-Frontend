@@ -1,8 +1,18 @@
+import { getUser } from "@/api/auth";
 import { AuthContext } from "@/context/AuthContext";
+import { useQuery } from "@tanstack/react-query";
 import { useContext } from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 export default function ProfileScreen() {
   const { signout } = useContext(AuthContext);
+
+  const { data, isFetching, isSuccess } = useQuery({
+    queryKey: ["user"],
+    queryFn: getUser,
+  });
+
+  console.log("HEREEEE", data);
+  if (isFetching) return <Text>Loading...</Text>;
 
   return (
     <View style={styles.background}>
@@ -13,8 +23,8 @@ export default function ProfileScreen() {
           style={styles.logo}
         />
         <View style={styles.infoBox}>
-          <Text style={styles.username}>username</Text>
-          <Text style={styles.email}>email</Text>
+          <Text style={styles.username}>{data.username} </Text>
+          <Text style={styles.email}>{data.email}</Text>
           <TouchableOpacity onPress={signout} style={styles.button}>
             <Text style={styles.buttonText}>Sign out</Text>
           </TouchableOpacity>
