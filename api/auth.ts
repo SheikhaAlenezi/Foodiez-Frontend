@@ -19,4 +19,9 @@ export const getUsers = async () => {
   return res.data;
 };
 
+export const getMyProfile = async () => {
+  const res = await instance.get("/users/myProfile");
+  return res.data;
+};
+
 export default { signUp, signIn, getUsers };

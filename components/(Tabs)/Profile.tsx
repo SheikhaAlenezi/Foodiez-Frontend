@@ -4,6 +4,15 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 export default function ProfileScreen() {
   const { signout } = useContext(AuthContext);
 
+  // const { data, isFetching, isSuccess } = useQuery({
+  //   queryKey: ["myProfile"],
+  //   queryFn: getMyProfile,
+  // });
+
+  // console.log(data);
+
+  // if (isFetching) return <Text>Loading...</Text>;
+
   return (
     <View style={styles.background}>
       <Text style={styles.title}>My profile</Text>

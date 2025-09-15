@@ -1,11 +1,15 @@
 import CustomizeButton from "@/components/customizeButton";
 import { router } from "expo-router";
 import LottieView from "lottie-react-native";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 
 export default function Index() {
   const handlesigninButton = () => {
     router.dismissTo("/auth/signIn");
+  };
+
+  const handlesignUpButton = () => {
+    router.dismissTo("/auth/signUp");
   };
 
   return (
@@ -16,14 +20,9 @@ export default function Index() {
         loop={true}
         style={styles.lottie}
       />
-      <View style={{ width: "30%", alignItems: "center" }}>
-        <CustomizeButton text={"Signin"} onPress={handlesigninButton} />
-        <View style={{ flexDirection: "row" }}>
-          <Text>No Account?</Text>
-          <TouchableOpacity onPress={() => router.push("/auth/signUp")}>
-            <Text style={{ fontWeight: "500" }}>signup</Text>
-          </TouchableOpacity>
-        </View>
+      <View style={{ width: 300, gap: 20, alignItems: "center" }}>
+        <CustomizeButton text={"Sign In"} onPress={handlesigninButton} />
+        <CustomizeButton text={"Sign Up"} onPress={handlesignUpButton} />
       </View>
     </View>
   );

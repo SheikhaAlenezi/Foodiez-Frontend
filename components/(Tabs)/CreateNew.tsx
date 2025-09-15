@@ -10,7 +10,7 @@ import {
   TouchableWithoutFeedback,
   View,
 } from "react-native";
-
+import CategoryItem from "./CategoryItem";
 const CreateNewScreen = () => {
   return (
     <View style={styles.background}>
@@ -23,7 +23,11 @@ const CreateNewScreen = () => {
 
             <View style={styles.container}>
               <ScrollView
-                style={{ borderTopLeftRadius: 50, borderTopRightRadius: 50 }}
+                style={{
+                  borderTopLeftRadius: 50,
+                  borderTopRightRadius: 50,
+                  marginBottom: 100,
+                }}
               >
                 <Text style={styles.username}>
                   Share your delecious creations!
@@ -33,6 +37,12 @@ const CreateNewScreen = () => {
                   <TextInput
                     style={styles.input}
                     placeholder="Enter recipe name"
+                    placeholderTextColor={"white"}
+                  />
+                  <Text style={styles.label}>Recipe description</Text>
+                  <TextInput
+                    style={styles.inputBig}
+                    placeholder="Enter recipe description"
                     placeholderTextColor={"white"}
                   />
                   <Text style={styles.label}>Recipe instructions</Text>
@@ -59,6 +69,8 @@ const CreateNewScreen = () => {
                       />
                     </View>
                   </View>
+                  <Text style={styles.label}>Category</Text>
+                  <CategoryItem />
                 </View>
               </ScrollView>
             </View>

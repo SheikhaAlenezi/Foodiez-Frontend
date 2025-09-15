@@ -47,7 +47,11 @@ const CategoryScreen = () => {
 
             <View style={styles.container}>
               <ScrollView
-                style={{ borderTopLeftRadius: 50, borderTopRightRadius: 50 }}
+                style={{
+                  borderTopLeftRadius: 50,
+                  borderTopRightRadius: 50,
+                  marginBottom: 100,
+                }}
                 contentContainerStyle={{ paddingBottom: 10 }}
                 showsVerticalScrollIndicator={false}
               >
