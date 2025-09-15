@@ -1,9 +1,11 @@
 import { signIn } from "@/api/auth";
 import { AuthContext } from "@/context/AuthContext";
+import { Ionicons } from "@expo/vector-icons";
 import { useMutation } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { router } from "expo-router";
 import React, { useContext, useState } from "react";
+
 import {
   Alert,
   Image,
@@ -22,6 +24,7 @@ const SignInScreen = () => {
   const { isAuthenticated, setIsAuthenticated } = useContext(AuthContext);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [isNull, setIsNull] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
 
   const { mutate } = useMutation({
@@ -40,7 +43,7 @@ const SignInScreen = () => {
   const SignUpSchema = Yup.object().shape({
     username: Yup.string().required("username required"),
     password: Yup.string()
-      .min(4, "atleast 4 character ")
+      .min(4, "Password must be atleast 4 characters long ")
       .required("password required"),
   });
 
@@ -52,6 +55,7 @@ const SignInScreen = () => {
       Alert.alert("error", err.message);
     }
   };
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -76,29 +80,75 @@ const SignInScreen = () => {
           <View style={styles.card}>
             <Text style={styles.label}>Username:</Text>
             <TextInput
-              placeholder="type here"
+              placeholder="Enter your username"
               placeholderTextColor="#c3c3c3ff"
               value={username}
               onChangeText={setUsername}
               style={styles.inputText}
             />
+            <View style={{ position: "relative", marginBottom: 20 }}>
+              <Text style={styles.label}>Password:</Text>
+              <TextInput
+                onChangeText={(text) => {
+                  setPassword(text);
+                  text === null ? setIsNull(true) : setIsNull(false);
+                }}
+                placeholder="Enter your password"
+                value={password}
+                placeholderTextColor="#c3c3c3ff"
+                secureTextEntry={!showPassword}
+                style={[styles.inputText, { paddingRight: 45 }]} // make space for the icon
+              />
 
-            <Text style={styles.label}>Password:</Text>
+              {!isNull && (
+                <TouchableOpacity
+                  onPress={() => setShowPassword(!showPassword)}
+                  style={{
+                    position: "absolute",
+                    right: 10,
+                    top: 30, // adjust to vertically center the icon
+                    marginBottom: 0, // remove original margin
+                  }}
+                >
+                  <View>
+                    {showPassword ? (
+                      <Ionicons name="eye-outline" size={20} color="gray" />
+                    ) : (
+                      <Ionicons name="eye-off-outline" size={20} color="gray" />
+                    )}
+                  </View>
+                </TouchableOpacity>
+              )}
+            </View>
+
+            {/* <Text style={styles.label}>Password:</Text>
             <TextInput
-              placeholder="Create password"
+              onChangeText={(text) => {
+                return (
+                  text === null ? setIsNull(true) : setIsNull(false),
+                  setPassword
+                );
+              }}
+              placeholder="Enter your password"
               placeholderTextColor="#c3c3c3ff"
-              value={password}
               secureTextEntry={!showPassword}
-              onChangeText={setPassword}
               style={styles.inputText}
             />
 
-            <TouchableOpacity
-              onPress={() => setShowPassword(!showPassword)}
-              style={{ marginBottom: 20 }}
-            >
-              <Text>{showPassword ? "Hide" : "show"}</Text>
-            </TouchableOpacity>
+            {!isNull && (
+              <TouchableOpacity
+                onPress={() => setShowPassword(!showPassword)}
+                style={{ marginBottom: 20 }}
+              >
+                <View>
+                  {!showPassword ? (
+                    <Ionicons name="eye-outline" size={20} color="purple" />
+                  ) : (
+                    <Ionicons name="eye-off-outline" size={20} color="purple" />
+                  )}
+                </View>
+              </TouchableOpacity>
+            )} */}
 
             <TouchableOpacity onPress={handleSignUp} style={styles.button}>
               <Text style={styles.buttonText}>Sign In</Text>
@@ -178,5 +228,6 @@ const styles = StyleSheet.create({
   buttonText: {
     color: "#fff",
     fontWeight: "bold",
+    fontSize: 20,
   },
 });

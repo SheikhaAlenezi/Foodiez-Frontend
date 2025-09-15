@@ -1,4 +1,4 @@
-import { getUser } from "@/api/auth";
+import { getMyProfile } from "@/api/auth";
 import { AuthContext } from "@/context/AuthContext";
 import { useQuery } from "@tanstack/react-query";
 import { useContext } from "react";
@@ -8,7 +8,7 @@ export default function ProfileScreen() {
 
   const { data, isFetching, isSuccess } = useQuery({
     queryKey: ["user"],
-    queryFn: getUser,
+    queryFn: getMyProfile,
   });
 
   console.log("HEREEEE", data);
