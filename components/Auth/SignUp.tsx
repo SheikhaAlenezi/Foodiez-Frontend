@@ -17,6 +17,9 @@ import {
   View,
 } from "react-native";
 import * as Yup from "yup";
+interface ErrorResponse {
+  message?: string;
+}
 
 const SignUpScreen = () => {
   const { isAuthenticated, setIsAuthenticated } = useContext(AuthContext);
@@ -32,10 +35,9 @@ const SignUpScreen = () => {
       setIsAuthenticated(true);
       router.replace("/(tabs)");
     },
-    onError: (err: AxiosError) => {
-      console.log(err.message, err.stack, err.status);
-
-      Alert.alert("signup failed", err.message || "try later aligator");
+    onError: (err: AxiosError<ErrorResponse>) => {
+      const serverMessage = err.response?.data?.message;
+      Alert.alert("signup failed", "couldn't create account,try again");
     },
   });
 

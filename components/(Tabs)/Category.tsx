@@ -1,4 +1,6 @@
 import { createCategory } from "@/api/category";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { router } from "expo-router";
 import React, { useState } from "react";
 import {
   Keyboard,
@@ -13,6 +15,7 @@ import {
   TouchableWithoutFeedback,
   View,
 } from "react-native";
+// here
 
 const CategoryScreen = () => {
   const [selectedColor, setSelectedColor] = useState("");
@@ -20,7 +23,23 @@ const CategoryScreen = () => {
   const [showPreview, setShowPreview] = useState(false);
   const [categoryName, setCategoryName] = useState("");
   const [description, setDescription] = useState("");
-
+  const [successMessage, setSuccessMessage] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string>("");
+  // me
+  const queryClient = useQueryClient();
+  const mutation = useMutation({
+    mutationFn: createCategory,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["categories"] });
+      setSuccessMessage(true);
+      setTimeout(() => setSuccessMessage(false), 2000);
+    },
+    onError: (err: any) => {
+      const serverMessage = err.response?.data?.message;
+      setErrorMessage(serverMessage || "category already exists");
+      setTimeout(() => setErrorMessage(""), 2000);
+    },
+  });
   const colors = [
     "#FF6B6B",
     "#FFA500",
@@ -34,7 +53,21 @@ const CategoryScreen = () => {
     "#17A2B8",
     "#808080",
   ];
-  const icons = ["🍔", "☕", "🎂", "🍕", "🐟", "🍎", "🥬", "🍦", "🍗", "🥕"];
+  const icons = [
+    "🍔",
+    "☕",
+    "🎂",
+    "🍕",
+    "🐟",
+    "🍎",
+    "🥬",
+    "🍦",
+    "🍗",
+    "🥕",
+    "🧃",
+    "🍝",
+    "🍣",
+  ];
   return (
     <View style={styles.background}>
       <KeyboardAvoidingView
@@ -42,7 +75,6 @@ const CategoryScreen = () => {
         behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          {/* style={{ flex: 1 }} */}
           <View>
             <Text style={styles.title}>Create Category</Text>
 
@@ -79,14 +111,7 @@ const CategoryScreen = () => {
 
                   <View style={styles.smallView}>
                     <Text style={styles.label}>Category color</Text>
-                    {/* <View
-                      style={{
-                        display: "flex",
-                        flexDirection: "row",
-                        marginTop: 10,
-                        justifyContent: "flex-start",
-                      }}
-                    > */}
+
                     <ScrollView
                       horizontal
                       showsHorizontalScrollIndicator={false}
@@ -104,7 +129,6 @@ const CategoryScreen = () => {
                         />
                       ))}
                     </ScrollView>
-                    {/* </View> */}
                   </View>
                   <View style={styles.smallView}>
                     <Text style={styles.label}>Category icon</Text>
@@ -134,6 +158,8 @@ const CategoryScreen = () => {
                       onPress={() => {
                         setSelectedColor("");
                         setSelectedIcon("");
+                        setShowPreview(false);
+                        router.replace("/(tabs)/recipe");
                       }}
                     >
                       <Text style={styles.buttonText}> Cancel</Text>
@@ -155,6 +181,7 @@ const CategoryScreen = () => {
                     </TouchableOpacity>
                   </View>
                   {/* pop up message */}
+
                   <Modal
                     visible={showPreview}
                     transparent
@@ -182,23 +209,18 @@ const CategoryScreen = () => {
                         </View>
                         <TouchableOpacity
                           style={[styles.button, styles.createButton]}
-                          onPress={async () => {
-                            try {
-                              const res = await createCategory({
-                                name: categoryName,
-                                description,
-                                color: selectedColor,
-                                icon: selectedIcon,
-                              });
-                              console.log("saved", res.data);
-                              setShowPreview(false);
-                              setCategoryName("");
-                              setDescription("");
-                              setSelectedColor("");
-                              setSelectedIcon("");
-                            } catch (err) {
-                              console.log("error saving", err);
-                            }
+                          onPress={() => {
+                            mutation.mutate({
+                              name: categoryName,
+                              description,
+                              color: selectedColor,
+                              icon: selectedIcon,
+                            });
+                            setShowPreview(false);
+                            setCategoryName("");
+                            setDescription("");
+                            setSelectedColor("");
+                            setSelectedIcon("");
                           }}
                         >
                           <Text
@@ -228,6 +250,30 @@ const CategoryScreen = () => {
                       </View>
                     </View>
                   </Modal>
+                  {/* show message success */}
+                  {successMessage && (
+                    <View
+                      style={{
+                        backgroundColor: "green",
+                        padding: 10,
+                        borderRadius: 8,
+                      }}
+                    >
+                      <Text style={{ color: "white" }}>category added !!</Text>
+                    </View>
+                  )}
+                  {/* show message error category exsists */}
+                  {errorMessage !== "" && (
+                    <View
+                      style={{
+                        backgroundColor: "red",
+                        padding: 10,
+                        borderRadius: 8,
+                      }}
+                    >
+                      <Text style={{ color: "white" }}>{errorMessage}</Text>
+                    </View>
+                  )}
                 </View>
               </ScrollView>
             </View>
