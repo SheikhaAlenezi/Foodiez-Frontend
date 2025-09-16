@@ -28,19 +28,20 @@ export default CategoryItem;
 
 const styles = StyleSheet.create({
   container: {
-    borderRadius: 25,
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    marginRight: 10,
+    borderRadius: 35,
+    width: 60,
+    height: 60,
+
+    marginRight: 8,
     alignItems: "center",
     justifyContent: "center",
   },
   icon: {
-    fontSize: 20,
-    marginBottom: 3,
+    fontSize: 15,
+    marginBottom: 2,
   },
   name: {
-    fontSize: 14,
+    fontSize: 11,
     fontWeight: "600",
     color: "#fff",
   },

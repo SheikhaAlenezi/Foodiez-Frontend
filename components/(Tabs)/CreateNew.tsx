@@ -10,7 +10,10 @@ import {
   TouchableWithoutFeedback,
   View,
 } from "react-native";
-import CategoryItem from "./CategoryItem";
+import CategoriesList from "../CategoriesList";
+import IngredientDropdown from "../Ingredient";
+// import IngredientDropdown from "../IngredientDropdown";
+
 const CreateNewScreen = () => {
   return (
     <View style={styles.background}>
@@ -28,6 +31,8 @@ const CreateNewScreen = () => {
                   borderTopRightRadius: 50,
                   marginBottom: 100,
                 }}
+                keyboardShouldPersistTaps="handled"
+                showsVerticalScrollIndicator={false}
               >
                 <Text style={styles.username}>
                   Share your delecious creations!
@@ -70,8 +75,18 @@ const CreateNewScreen = () => {
                     </View>
                   </View>
                   <Text style={styles.label}>Category</Text>
-                  <CategoryItem />
+                  <CategoriesList
+                    onCategorySelect={(id) => console.log("selected", id)}
+                  />
                 </View>
+                <IngredientDropdown
+                  ingredients={[
+                    { _id: "1", name: "Flour" },
+                    { _id: "2", name: "Sugar" },
+                    { _id: "3", name: "Eggs" },
+                    { _id: "4", name: "Butter" },
+                  ]}
+                />
               </ScrollView>
             </View>
           </View>

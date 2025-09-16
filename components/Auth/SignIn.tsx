@@ -20,6 +20,9 @@ import {
 } from "react-native";
 import * as Yup from "yup";
 
+interface ErrorResponse {
+  message: string;
+}
 const SignInScreen = () => {
   const { isAuthenticated, setIsAuthenticated } = useContext(AuthContext);
   const [username, setUsername] = useState("");
@@ -34,9 +37,10 @@ const SignInScreen = () => {
       setIsAuthenticated(true);
       router.replace("/(tabs)");
     },
-    onError: (err: AxiosError) => {
-      console.log(err.message, err.cause);
-      Alert.alert("signin failed", err.message || "try later aligator");
+    onError: (err: AxiosError<ErrorResponse>) => {
+      // me
+      const serverMessage = err.response?.data?.message;
+      Alert.alert("signin failed", "username or password incorrect");
     },
   });
 
