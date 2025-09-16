@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { ScrollView, StyleSheet, Text, TouchableOpacity } from "react-native";
 
 interface Category {
@@ -19,6 +19,8 @@ const CategoryItem = () => {
     { name: "Drinks", icon: "🧃" },
   ];
 
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+
   return (
     <ScrollView
       horizontal
@@ -27,7 +29,13 @@ const CategoryItem = () => {
       style={{ height: 120 }}
     >
       {categories.map((c) => (
-        <TouchableOpacity style={styles.circle} key={c.name}>
+        <TouchableOpacity
+          key={c.name}
+          onPress={() => setSelectedCategory(c.name)}
+          style={
+            selectedCategory === c.name ? styles.circleChosen : styles.circle
+          }
+        >
           <Text style={styles.text}>{c.icon}</Text>
         </TouchableOpacity>
       ))}
@@ -39,9 +47,26 @@ export default CategoryItem;
 
 const styles = StyleSheet.create({
   circle: {
-    height: 90,
-    width: 90,
+    height: 70,
+    width: 70,
     borderRadius: 100,
+    backgroundColor: "white",
+    justifyContent: "center",
+    alignItems: "center",
+    margin: 6,
+    flexDirection: "row",
+    shadowColor: "#000",
+    shadowOpacity: 0.1,
+    shadowOffset: { width: 0, height: 4 },
+    shadowRadius: 8,
+    elevation: 5,
+  },
+  circleChosen: {
+    height: 70,
+    width: 70,
+    borderRadius: 100,
+    borderColor: "purple",
+    borderWidth: 3,
     backgroundColor: "white",
     justifyContent: "center",
     alignItems: "center",
@@ -55,6 +80,6 @@ const styles = StyleSheet.create({
   },
   text: {
     color: "#333",
-    fontSize: 42,
+    fontSize: 30,
   },
 });

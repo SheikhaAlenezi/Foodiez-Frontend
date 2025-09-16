@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import CategoriesList from "../CategoriesList";
+import CategoriesList from "./CategoriesList";
 
 export default function HomeScreen() {
   const [search, setSearch] = useState("");
