@@ -1,7 +1,14 @@
 import { getRecipesByCategory } from "@/api/category";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
-import { ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CategoriesList from "../CategoriesList";
 
@@ -34,10 +41,10 @@ export default function HomeScreen() {
         {/* category recipe */}
         {isLoading && <Text>Loading</Text>}
         {recipes?.data?.map((r: any) => (
-          <View key={r._id} style={styles.recipeCard}>
+          <TouchableOpacity key={r._id} style={styles.recipeCard}>
             <Text style={styles.recipeTitle}>{r.title}</Text>
             <Text style={styles.recipeDescription}>{r.instructions}</Text>
-          </View>
+          </TouchableOpacity>
         ))}
       </ScrollView>
     </SafeAreaView>

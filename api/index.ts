@@ -4,7 +4,6 @@ import { getToken } from "./storage";
 
 const instance = axios.create({
   baseURL: `${BASE_URL}/api`,
-  headers: { "Cache-Control": "no-cache" },
 });
 
 instance.interceptors.request.use(async (config) => {

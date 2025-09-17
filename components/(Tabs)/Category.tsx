@@ -15,6 +15,8 @@ import {
   TouchableWithoutFeedback,
   View,
 } from "react-native";
+import Toast from "react-native-toast-message";
+
 // here
 
 const CategoryScreen = () => {
@@ -23,21 +25,28 @@ const CategoryScreen = () => {
   const [showPreview, setShowPreview] = useState(false);
   const [categoryName, setCategoryName] = useState("");
   const [description, setDescription] = useState("");
-  const [successMessage, setSuccessMessage] = useState<boolean>(false);
-  const [errorMessage, setErrorMessage] = useState<string>("");
   // me
   const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: createCategory,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["categories"] });
-      setSuccessMessage(true);
-      setTimeout(() => setSuccessMessage(false), 2000);
+
+      Toast.show({
+        type: "success",
+        text1: "category added",
+        text2: "your category was created successfully !",
+        position: "top",
+      });
     },
     onError: (err: any) => {
       const serverMessage = err.response?.data?.message;
-      setErrorMessage(serverMessage || "category already exists");
-      setTimeout(() => setErrorMessage(""), 2000);
+      Toast.show({
+        type: "error",
+        text1: " Error",
+        text2: serverMessage || "category already exists !",
+        position: "top",
+      });
     },
   });
   const colors = [
@@ -74,6 +83,7 @@ const CategoryScreen = () => {
         style={{ flex: 1 }}
         behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
+        <Toast />
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <View>
             <Text style={styles.title}>Create Category</Text>
@@ -208,7 +218,7 @@ const CategoryScreen = () => {
                           </Text>
                         </View>
                         <TouchableOpacity
-                          style={[styles.button, styles.createButton]}
+                          style={[styles.modalButton, styles.createButton]}
                           onPress={() => {
                             mutation.mutate({
                               name: categoryName,
@@ -223,57 +233,18 @@ const CategoryScreen = () => {
                             setSelectedIcon("");
                           }}
                         >
-                          <Text
-                            style={{
-                              fontSize: 16,
-                              fontWeight: "bold",
-                              color: "#fff",
-                            }}
-                          >
-                            Confirm & Save
-                          </Text>
+                          <Text style={styles.buttonModal}>Confirm & Save</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
-                          style={[styles.button, styles.cancelButton]}
+                          style={[styles.modalButton, styles.cancelButton]}
                           onPress={() => setShowPreview(false)}
                         >
-                          <Text
-                            style={{
-                              fontSize: 16,
-                              fontWeight: "bold",
-                              color: "#fff",
-                            }}
-                          >
-                            Cancel
-                          </Text>
+                          <Text style={styles.buttonModal2}>Cancel</Text>
                         </TouchableOpacity>
                       </View>
                     </View>
                   </Modal>
-                  {/* show message success */}
-                  {successMessage && (
-                    <View
-                      style={{
-                        backgroundColor: "green",
-                        padding: 10,
-                        borderRadius: 8,
-                      }}
-                    >
-                      <Text style={{ color: "white" }}>category added !!</Text>
-                    </View>
-                  )}
-                  {/* show message error category exsists */}
-                  {errorMessage !== "" && (
-                    <View
-                      style={{
-                        backgroundColor: "red",
-                        padding: 10,
-                        borderRadius: 8,
-                      }}
-                    >
-                      <Text style={{ color: "white" }}>{errorMessage}</Text>
-                    </View>
-                  )}
+                  {/*  */}
                 </View>
               </ScrollView>
             </View>
@@ -487,5 +458,22 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "#fff",
     textAlign: "center",
+  },
+  buttonModal: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: "#fff",
+  },
+  buttonModal2: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: "purple",
+  },
+  modalButton: {
+    width: "100%",
+    paddingVertical: 12,
+    borderRadius: 10,
+    alignItems: "center",
+    marginVertical: 5,
   },
 });

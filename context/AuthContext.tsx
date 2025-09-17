@@ -1,81 +1,58 @@
-import { SignInInfo, UserInfo } from "@/data/userInfo";
-import axios from "axios";
 import * as SecureStore from "expo-secure-store";
 import { createContext, useEffect, useState } from "react";
 
 interface AuthContextType {
   isAuthenticated: boolean;
-  setIsAuthenticated: (isAuthenticated: boolean) => void;
+  setIsAuthenticated: (val: boolean) => void;
   signout: () => Promise<void>;
-  // user: UserInfo | null;
-  // setUser: (user: UserInfo | null) => void;
-  // signin: (values: SignInInfo) => Promise<void>;
+  signIn: (token: string) => Promise<void>;
 }
 
 export const AuthContext = createContext<AuthContextType>({
   isAuthenticated: false,
   setIsAuthenticated: () => {},
   signout: async () => {},
-  // user: null,
-
-  // setUser: () => {},
-  // signin: async () => {},
+  signIn: async () => {},
 });
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [user, setUser] = useState<UserInfo | null>(null);
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
 
   useEffect(() => {
-    const checkAuth = async () => {
+    const checkToken = async () => {
       try {
         const token = await SecureStore.getItemAsync("token");
-        if (token) {
-          setIsAuthenticated(true);
-        } else {
-          setIsAuthenticated(false);
-        }
-      } catch (error) {
-        console.log("error reading token", error);
+        setIsAuthenticated(!!token);
+      } catch (err) {
+        console.log("error checking token:", err);
         setIsAuthenticated(false);
       }
     };
-
-    checkAuth();
+    checkToken();
   }, []);
-  const signin = async (values: SignInInfo) => {
+
+  const signIn = async (token: string) => {
     try {
-      const response = await axios.post(
-        "$http://192.168.7.112:8000/api/auth/signin",
-        values
-      );
-      await SecureStore.setItemAsync("token", response.data.token);
-      setUser({
-        username: response.data.user.username,
-        email: response.data.user.email,
-      });
+      await SecureStore.setItemAsync("token", token);
       setIsAuthenticated(true);
-    } catch (error) {
-      console.log("signin error:", error);
-      throw error;
+    } catch (err) {
+      console.log("error storing token", err);
+      setIsAuthenticated(false);
     }
   };
 
   const signout = async () => {
     await SecureStore.deleteItemAsync("token");
     setIsAuthenticated(false);
-    setUser(null);
   };
+
+  if (isAuthenticated === null) {
+    return null;
+  }
+
   return (
     <AuthContext.Provider
-      value={{
-        isAuthenticated,
-        setIsAuthenticated,
-        signout,
-        // user,
-        // setUser,
-        // signin,
-      }}
+      value={{ isAuthenticated, setIsAuthenticated, signout, signIn }}
     >
       {children}
     </AuthContext.Provider>

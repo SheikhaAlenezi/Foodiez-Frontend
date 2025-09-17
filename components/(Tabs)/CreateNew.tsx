@@ -1,5 +1,6 @@
-import { createRecipe } from "@/api/Recipe";
+import { createRecipe } from "@/api/recipe";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { router } from "expo-router";
 import React, { useState } from "react";
 import {
   Keyboard,
@@ -16,7 +17,6 @@ import {
 } from "react-native";
 import CategoriesList from "../CategoriesList";
 import IngredientDropdown from "../Ingredient";
-
 interface RecipeInfo {
   recipeName: string;
   description: string;
@@ -142,17 +142,21 @@ const CreateNewScreen = () => {
                     }
                   />
                 </View>
-                <IngredientDropdown
-                  ingredients={[
-                    { _id: "1", name: "Flour" },
-                    { _id: "2", name: "Sugar" },
-                    { _id: "3", name: "Eggs" },
-                    { _id: "4", name: "Butter" },
-                  ]}
-                />
+                {/* ingreidients */}
+                <View style={styles.formBox}>
+                  <IngredientDropdown
+                    ingredients={[
+                      { _id: "1", name: "Flour" },
+                      { _id: "2", name: "Sugar" },
+                      { _id: "3", name: "Eggs" },
+                      { _id: "4", name: "Butter" },
+                    ]}
+                  />
+                </View>
                 <View style={styles.buttonRow}>
                   <TouchableOpacity
-                    onPress={() =>
+                    onPress={() => {
+                      router.replace("/(tabs)/recipe");
                       setRecipeInfo({
                         recipeName: "",
                         description: "",
@@ -161,8 +165,8 @@ const CreateNewScreen = () => {
                         serving: "",
                         category: "",
                         ingredients: [],
-                      })
-                    }
+                      });
+                    }}
                     style={styles.cancelButton}
                   >
                     <Text style={styles.buttonText}> Cancel</Text>

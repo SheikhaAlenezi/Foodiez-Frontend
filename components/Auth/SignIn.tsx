@@ -68,12 +68,6 @@ const SignInScreen = () => {
     >
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
         <View style={styles.container}>
-          {/* <Image
-            source={require("../../assets/images/foodiez-logo.png")}
-            style={styles.background}
-            resizeMode="contain"
-          /> */}
-
           <Image
             source={require("../../assets/images/chef.png")}
             style={styles.background}
@@ -124,35 +118,6 @@ const SignInScreen = () => {
                 </TouchableOpacity>
               )}
             </View>
-
-            {/* <Text style={styles.label}>Password:</Text>
-            <TextInput
-              onChangeText={(text) => {
-                return (
-                  text === null ? setIsNull(true) : setIsNull(false),
-                  setPassword
-                );
-              }}
-              placeholder="Enter your password"
-              placeholderTextColor="#c3c3c3ff"
-              secureTextEntry={!showPassword}
-              style={styles.inputText}
-            />
-
-            {!isNull && (
-              <TouchableOpacity
-                onPress={() => setShowPassword(!showPassword)}
-                style={{ marginBottom: 20 }}
-              >
-                <View>
-                  {!showPassword ? (
-                    <Ionicons name="eye-outline" size={20} color="purple" />
-                  ) : (
-                    <Ionicons name="eye-off-outline" size={20} color="purple" />
-                  )}
-                </View>
-              </TouchableOpacity>
-            )} */}
 
             <TouchableOpacity onPress={handleSignUp} style={styles.button}>
               <Text style={styles.buttonText}>Sign In</Text>
