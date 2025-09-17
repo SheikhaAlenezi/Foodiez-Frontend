@@ -13,5 +13,6 @@ export const getAllCategories = async () => {
   return await instance.get("/categories/getAllCategory");
 };
 export const getRecipesByCategory = async (categoryId: string) => {
-  return await instance.get(`/categories/${categoryId}/recipes`);
+  const res = await instance.get(`/categories/${categoryId}/recipes`);
+  return res.data;
 };

@@ -1,3 +1,5 @@
+import { createIngredient } from "@/api/ingredient";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import React, { useState } from "react";
 import {
   StyleSheet,
@@ -10,15 +12,34 @@ import { MultiSelect } from "react-native-element-dropdown";
 
 interface Ingredient {
   _id: string;
-  name: string;
+  names: string;
 }
 
 interface SelectedIngredient extends Ingredient {
   amount: string;
 }
 
-const IngredientDropdown = ({ ingredients }: { ingredients: Ingredient[] }) => {
+const IngredientDropdown = ({
+  ingredients,
+  onChange,
+}: {
+  ingredients: Ingredient[];
+  onChange: (selected: SelectedIngredient[]) => void;
+}) => {
   const [selected, setSelected] = useState<SelectedIngredient[]>([]);
+  const [newIngredientName, setNewIngredientName] = useState("");
+
+  const queryClient = useQueryClient();
+  const { mutate } = useMutation({
+    mutationFn: createIngredient,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["ingredients"] });
+      setNewIngredientName("");
+    },
+    onError: (err: any) => {
+      console.log("Error creating ingredient:", err);
+    },
+  });
 
   const handleChange = (ids: string[]) => {
     const newSelected = ids.map((id) => {
@@ -27,25 +48,48 @@ const IngredientDropdown = ({ ingredients }: { ingredients: Ingredient[] }) => {
       return found || { ...ingredient, amount: "" };
     });
     setSelected(newSelected);
+    onChange(newSelected);
   };
 
   const updateAmount = (id: string, value: string) => {
-    setSelected((prev) =>
-      prev.map((s) => (s._id === id ? { ...s, amount: value } : s))
+    const updated = selected.map((s) =>
+      s._id === id ? { ...s, amount: value } : s
     );
+    setSelected(updated);
+    onChange(updated);
   };
-
   const handleSubmit = () => {
     console.log("Ingredients added:", selected);
   };
   return (
     <View>
+      {/* createnew ingredient */}
+
+      <Text style={styles.label}>Add New Ingredient</Text>
+      <View style={styles.newIngredientBox}>
+        <TextInput
+          style={styles.input}
+          placeholder="Type new ingredient"
+          value={newIngredientName}
+          onChangeText={setNewIngredientName}
+        />
+        <TouchableOpacity
+          style={styles.addButton}
+          onPress={() => {
+            if (!newIngredientName.trim()) return;
+            mutate({ names: newIngredientName.trim() });
+          }}
+        >
+          <Text style={styles.addButtonText}>Add</Text>
+        </TouchableOpacity>
+      </View>
+      {/* list of ingredient */}
       <Text style={styles.label}>Ingredients</Text>
 
       <MultiSelect
         style={styles.dropdown}
         data={ingredients}
-        labelField="name"
+        labelField="names"
         valueField="_id"
         placeholder="Select ingredients"
         search
@@ -56,7 +100,7 @@ const IngredientDropdown = ({ ingredients }: { ingredients: Ingredient[] }) => {
 
       {selected.map((item) => (
         <View key={item._id} style={styles.selectedItem}>
-          <Text style={styles.tag}>{item.name}</Text>
+          <Text style={styles.tag}>{item.names}</Text>
           <TextInput
             style={styles.input}
             placeholder="Amount"
@@ -142,5 +186,21 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 16,
     fontWeight: "bold",
+  },
+  newIngredientBox: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 15,
+  },
+  addButton: {
+    backgroundColor: "#C88CC8",
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    borderRadius: 8,
+    marginLeft: 10,
+  },
+  addButtonText: {
+    color: "#fff",
+    fontWeight: "600",
   },
 });
