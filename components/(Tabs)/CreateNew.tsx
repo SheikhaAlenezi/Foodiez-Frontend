@@ -1,5 +1,7 @@
+import { getAllIngredients } from "@/api/ingredient";
 import { createRecipe } from "@/api/recipe";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { SelectedIngredient } from "@/data/userInfo";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { router } from "expo-router";
 import React, { useState } from "react";
 import {
@@ -17,14 +19,15 @@ import {
 } from "react-native";
 import CategoriesList from "../CategoriesList";
 import IngredientDropdown from "../Ingredient";
+
 interface RecipeInfo {
-  recipeName: string;
+  title: string;
   description: string;
   instructions: string;
   prep: string;
   serving: string;
   category: string;
-  ingredients: [];
+  ingredients: SelectedIngredient[];
 }
 
 const CreateNewScreen = () => {
@@ -47,8 +50,13 @@ const CreateNewScreen = () => {
     },
   });
 
+  const { data: ingredients = [] } = useQuery({
+    queryKey: ["ingredients"],
+    queryFn: getAllIngredients,
+  });
+
   const [recipeInfo, setRecipeInfo] = useState<RecipeInfo>({
-    recipeName: "",
+    title: "",
     description: "",
     instructions: "",
     prep: "",
@@ -83,7 +91,7 @@ const CreateNewScreen = () => {
                   <Text style={styles.label}>Recipe name</Text>
                   <TextInput
                     onChangeText={(text) => {
-                      setRecipeInfo({ ...recipeInfo, recipeName: text });
+                      setRecipeInfo({ ...recipeInfo, title: text });
                     }}
                     style={styles.input}
                     placeholder="Enter recipe name"
@@ -137,20 +145,18 @@ const CreateNewScreen = () => {
                   </View>
                   <Text style={styles.label}>Category</Text>
                   <CategoriesList
-                    onCategorySelect={(categoryName) =>
-                      setRecipeInfo({ ...recipeInfo, category: categoryName })
+                    onCategorySelect={(categoryId) =>
+                      setRecipeInfo({ ...recipeInfo, category: categoryId })
                     }
                   />
                 </View>
                 {/* ingreidients */}
                 <View style={styles.formBox}>
                   <IngredientDropdown
-                    ingredients={[
-                      { _id: "1", name: "Flour" },
-                      { _id: "2", name: "Sugar" },
-                      { _id: "3", name: "Eggs" },
-                      { _id: "4", name: "Butter" },
-                    ]}
+                    ingredients={ingredients}
+                    onChange={(selected) =>
+                      setRecipeInfo({ ...recipeInfo, ingredients: selected })
+                    }
                   />
                 </View>
                 <View style={styles.buttonRow}>
@@ -158,7 +164,7 @@ const CreateNewScreen = () => {
                     onPress={() => {
                       router.replace("/(tabs)/recipe");
                       setRecipeInfo({
-                        recipeName: "",
+                        title: "",
                         description: "",
                         instructions: "",
                         prep: "",
@@ -195,7 +201,7 @@ const CreateNewScreen = () => {
             <Text style={styles.modalTitle}>Recipe Preview</Text>
             <View style={styles.previewCard}>
               <Text style={styles.previewHeader}>
-                {recipeInfo.recipeName || "Recipe Name"}
+                {recipeInfo.title || "Recipe Name"}
               </Text>
 
               <View style={styles.previewSection}>
@@ -240,7 +246,7 @@ const CreateNewScreen = () => {
                 mutation.mutate(recipeInfo);
                 setShowPreview(false);
                 setRecipeInfo({
-                  recipeName: "",
+                  title: "",
                   description: "",
                   instructions: "",
                   prep: "",

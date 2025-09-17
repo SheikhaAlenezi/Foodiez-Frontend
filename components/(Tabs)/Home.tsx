@@ -1,14 +1,9 @@
 import { getRecipesByCategory } from "@/api/category";
+import { getAllRecipe } from "@/api/recipe";
+import RecipeCard from "@/components/RecipeCard";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
-import {
-  ScrollView,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CategoriesList from "../CategoriesList";
 
@@ -16,11 +11,20 @@ export default function HomeScreen() {
   const [search, setSearch] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
-  const { data: recipes, isLoading } = useQuery({
+  const { data: recipesByCategory, isLoading: loadingCategory } = useQuery({
     queryKey: ["recipes", selectedCategory],
     queryFn: () => getRecipesByCategory(selectedCategory as string),
     enabled: !!selectedCategory,
   });
+
+  const { data: allRecipes, isLoading: loadingAll } = useQuery({
+    queryKey: ["recipes"],
+    queryFn: getAllRecipe,
+    enabled: !selectedCategory,
+  });
+
+  const dataToShow = selectedCategory ? recipesByCategory : allRecipes;
+  const isLoading = selectedCategory ? loadingCategory : loadingAll;
 
   return (
     <SafeAreaView style={styles.container}>
@@ -39,13 +43,19 @@ export default function HomeScreen() {
 
         <Text style={styles.sectionTitle}>Popular Recipes</Text>
         {/* category recipe */}
-        {isLoading && <Text>Loading</Text>}
-        {recipes?.data?.map((r: any) => (
+        {isLoading && <Text>Loading...</Text>}
+        {dataToShow?.length === 0 && !isLoading && (
+          <Text>No recipes found</Text>
+        )}
+        {dataToShow?.map((r: any) => (
+          <RecipeCard key={r._id} recipe={r} />
+        ))}
+        {/* {recipes?.data?.map((r: any) => (
           <TouchableOpacity key={r._id} style={styles.recipeCard}>
             <Text style={styles.recipeTitle}>{r.title}</Text>
             <Text style={styles.recipeDescription}>{r.instructions}</Text>
           </TouchableOpacity>
-        ))}
+        ))} */}
       </ScrollView>
     </SafeAreaView>
   );
