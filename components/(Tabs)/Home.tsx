@@ -4,7 +4,7 @@ import { useState } from "react";
 import { ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CategoriesList from "../CategoriesList";
-
+import RecipeList from "../recipes/RecipeList";
 export default function HomeScreen() {
   const [search, setSearch] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
@@ -39,6 +39,7 @@ export default function HomeScreen() {
             <Text style={styles.recipeDescription}>{r.instructions}</Text>
           </View>
         ))}
+        <RecipeList />
       </ScrollView>
     </SafeAreaView>
   );
@@ -51,6 +52,7 @@ const styles = StyleSheet.create({
     paddingTop: 20,
   },
   searchContainer: {
+    marginTop: 20,
     marginHorizontal: 20,
     marginBottom: 15,
   },

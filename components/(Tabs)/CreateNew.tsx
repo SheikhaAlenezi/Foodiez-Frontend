@@ -1,5 +1,4 @@
-import { createRecipe } from "@/api/Recipe";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+// import { createRecipe } from "@/api/Recipe";
 import React, { useState } from "react";
 import {
   Keyboard,
@@ -32,20 +31,20 @@ const CreateNewScreen = () => {
   const [successMessage, setSuccessMessage] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
 
-  const queryClient = useQueryClient();
-  const mutation = useMutation({
-    mutationFn: createRecipe,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["categories"] });
-      setSuccessMessage(true);
-      setTimeout(() => setSuccessMessage(false), 2000);
-    },
-    onError: (err: any) => {
-      const serverMessage = err.response?.data?.message;
-      setErrorMessage(serverMessage || "recipe already exists");
-      setTimeout(() => setErrorMessage(""), 2000);
-    },
-  });
+  // const queryClient = useQueryClient();
+  // const mutation = useMutation({
+  //   mutationFn: createRecipe,
+  //   onSuccess: () => {
+  //     queryClient.invalidateQueries({ queryKey: ["categories"] });
+  //     setSuccessMessage(true);
+  //     setTimeout(() => setSuccessMessage(false), 2000);
+  //   },
+  //   onError: (err: any) => {
+  //     const serverMessage = err.response?.data?.message;
+  //     setErrorMessage(serverMessage || "recipe already exists");
+  //     setTimeout(() => setErrorMessage(""), 2000);
+  //   },
+  // });
 
   const [recipeInfo, setRecipeInfo] = useState<RecipeInfo>({
     recipeName: "",
@@ -233,7 +232,7 @@ const CreateNewScreen = () => {
             <TouchableOpacity
               style={[styles.button, styles.createButton]}
               onPress={() => {
-                mutation.mutate(recipeInfo);
+                // mutation.mutate(recipeInfo);
                 setShowPreview(false);
                 setRecipeInfo({
                   recipeName: "",
