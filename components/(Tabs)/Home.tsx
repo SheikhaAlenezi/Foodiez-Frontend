@@ -28,7 +28,10 @@ export default function HomeScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <ScrollView
+        style={{ marginBottom: 50 }}
+        showsVerticalScrollIndicator={false}
+      >
         <View style={styles.searchContainer}>
           <TextInput
             style={styles.searchInput}
@@ -68,6 +71,7 @@ const styles = StyleSheet.create({
   searchContainer: {
     marginHorizontal: 20,
     marginBottom: 15,
+    marginTop: 20,
   },
   searchInput: {
     backgroundColor: "#fff",
