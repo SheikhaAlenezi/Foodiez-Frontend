@@ -1,15 +1,13 @@
+import AuthContext from "@/context/AuthContext";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { Tabs } from "expo-router";
 import { useContext } from "react";
-import { AuthContext } from "../../context/AuthContext";
+
 const _layout = () => {
   const { isAuthenticated, setIsAuthenticated } = useContext(AuthContext);
-  // const handleSignOut = async () => {
-  //   setIsAuthenticated(false);
-  //   router.dismissTo("/landingPage");
-  // };
+
   return (
     <Tabs
       screenOptions={{
@@ -53,6 +51,7 @@ const _layout = () => {
       <Tabs.Screen
         name="profile"
         options={{
+          // title: "Profile",
           tabBarIcon: ({ color, size }) => (
             <FontAwesome5 name="user" size={24} color={color} />
           ),

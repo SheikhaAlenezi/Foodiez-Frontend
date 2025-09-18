@@ -53,7 +53,7 @@ const CategoriesList = ({
           name={cat.name}
           color={cat.color}
           icon={cat.icon}
-          onPress={() => onCategorySelect(cat.name)}
+          onPress={() => onCategorySelect(cat._id)}
         />
       ))}
     </ScrollView>

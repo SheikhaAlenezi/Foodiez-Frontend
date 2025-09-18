@@ -5,8 +5,10 @@ interface Recipe {
   _id: string;
   title: string;
   description: string;
+
   prep: string;
   serving: string;
+
 }
 
 const RecipeCard = ({ recipe }: { recipe: Recipe }) => {
@@ -14,6 +16,7 @@ const RecipeCard = ({ recipe }: { recipe: Recipe }) => {
     <TouchableOpacity style={styles.card}>
       <View style={styles.info}>
         <Text style={styles.title}>{recipe.title}</Text>
+
         <Text style={styles.desc} numberOfLines={3}>
           {recipe.description}
         </Text>
@@ -21,6 +24,9 @@ const RecipeCard = ({ recipe }: { recipe: Recipe }) => {
           <Text style={styles.metaText}>{`⏲️ ${recipe.prep || ""}`}</Text>
           <Text style={styles.metaText}>{`👥 ${recipe.serving || ""}`}</Text>
         </View>
+
+        <Text>{recipe.description}</Text>
+
       </View>
     </TouchableOpacity>
   );

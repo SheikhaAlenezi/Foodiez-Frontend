@@ -1,17 +1,24 @@
 import { getMyProfile } from "@/api/auth";
-import { AuthContext } from "@/context/AuthContext";
+import { deleteToken } from "@/api/storage";
+import AuthContext from "@/context/AuthContext";
 import { useQuery } from "@tanstack/react-query";
+import { router } from "expo-router";
 import { useContext } from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 export default function ProfileScreen() {
-  const { signout } = useContext(AuthContext);
-
+  // const { signout }= useContext(AuthContext);
+  const { setIsAuthenticated } = useContext(AuthContext);
+  const handleSignout = async () => {
+    await deleteToken();
+    setIsAuthenticated(false);
+    router.replace("/auth/signIn");
+  };
   const { data, isFetching, isSuccess } = useQuery({
     queryKey: ["user"],
     queryFn: getMyProfile,
   });
 
-  console.log("HEREEEE", data);
+  console.log("profile", data);
   if (isFetching) return <Text>Loading...</Text>;
 
   return (
@@ -25,7 +32,7 @@ export default function ProfileScreen() {
         <View style={styles.infoBox}>
           <Text style={styles.username}>{data.username} </Text>
           <Text style={styles.email}>{data.email}</Text>
-          <TouchableOpacity onPress={signout} style={styles.button}>
+          <TouchableOpacity onPress={handleSignout} style={styles.button}>
             <Text style={styles.buttonText}>Sign out</Text>
           </TouchableOpacity>
         </View>

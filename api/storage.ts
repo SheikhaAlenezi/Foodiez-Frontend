@@ -15,3 +15,11 @@ export const getToken = async () => {
     console.log("error getting tokens", err);
   }
 };
+
+export const deleteToken = async () => {
+  try {
+    await SecureStore.deleteItemAsync("token");
+  } catch (error) {
+    console.error("Error deleting token:", error);
+  }
+};

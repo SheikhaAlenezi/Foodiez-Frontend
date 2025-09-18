@@ -5,16 +5,16 @@ export const getAllIngredients = async () => {
   return res.data;
 };
 
-// export const createIngredient = async (ingredient: {
-//   names: string;
-//   amount: string;
-//   recipe?: string;
-// }) => {
-//   const res = await instance.post("/ingredient/createIngredient");
-//   return res.data;
-// };
-
-export const createIngredient = async (payload: { names: string }) => {
-  const res = await instance.post("/ingredient", payload);
+export const createIngredient = async (data: {
+  names: string;
+  amount?: string;
+  recipe?: string;
+}) => {
+  const res = await instance.post("/ingredient/createIngredient", data);
   return res.data;
 };
+
+// export const createIngredient = async (payload: { names: string }) => {
+//   const res = await instance.post("/ingredient", payload);
+//   return res.data;
+// };

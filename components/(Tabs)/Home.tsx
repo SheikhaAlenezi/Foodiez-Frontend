@@ -12,13 +12,13 @@ export default function HomeScreen() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
   const { data: recipesByCategory, isLoading: loadingCategory } = useQuery({
-    queryKey: ["recipes", selectedCategory],
+    queryKey: ["recipesByCategory", selectedCategory],
     queryFn: () => getRecipesByCategory(selectedCategory as string),
     enabled: !!selectedCategory,
   });
 
   const { data: allRecipes, isLoading: loadingAll } = useQuery({
-    queryKey: ["recipes"],
+    queryKey: ["allRecipes"],
     queryFn: getAllRecipe,
     enabled: !selectedCategory,
   });
@@ -44,12 +44,16 @@ export default function HomeScreen() {
 
         <CategoriesList onCategorySelect={setSelectedCategory} />
 
-        <Text style={styles.sectionTitle}>Popular Recipes</Text>
-        {/* category recipe */}
+        <Text style={styles.sectionTitle}>
+          {selectedCategory ? " Recipes" : "Popular Recipes"}
+        </Text>
+
         {isLoading && <Text>Loading...</Text>}
+
         {dataToShow?.length === 0 && !isLoading && (
           <Text>No recipes found</Text>
         )}
+
         {dataToShow?.map((r: any) => (
           <RecipeCard key={r._id} recipe={r} />
         ))}
@@ -86,7 +90,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
     marginTop: 25,
     marginBottom: 10,
-    color: "#333",
+    color: "purple",
   },
   recipeCard: {
     backgroundColor: "#fff",

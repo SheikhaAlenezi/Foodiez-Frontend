@@ -32,12 +32,13 @@ const IngredientDropdown = ({
   const queryClient = useQueryClient();
   const { mutate } = useMutation({
     mutationFn: createIngredient,
-    onSuccess: () => {
+    onSuccess: (newIng) => {
       queryClient.invalidateQueries({ queryKey: ["ingredients"] });
+      setSelected((prev) => [...prev, { ...newIng, amount: "" }]);
       setNewIngredientName("");
     },
     onError: (err: any) => {
-      console.log("Error creating ingredient:", err);
+      console.log("Error creating ingredient:", err.response?.data || err);
     },
   });
 
@@ -77,7 +78,9 @@ const IngredientDropdown = ({
           style={styles.addButton}
           onPress={() => {
             if (!newIngredientName.trim()) return;
-            mutate({ names: newIngredientName.trim() });
+            mutate({
+              names: newIngredientName.trim(),
+            });
           }}
         >
           <Text style={styles.addButtonText}>Add</Text>
