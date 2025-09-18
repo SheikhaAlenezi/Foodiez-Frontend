@@ -1,5 +1,5 @@
 import { signIn } from "@/api/auth";
-import { AuthContext } from "@/context/AuthContext";
+import AuthContext from "@/context/AuthContext";
 import { Ionicons } from "@expo/vector-icons";
 import { useMutation } from "@tanstack/react-query";
 import { AxiosError } from "axios";

@@ -19,7 +19,7 @@ interface SelectedIngredient {
   amount: string;
 }
 interface RecipeInfo {
-  recipeName: string;
+  title: string;
   description: string;
   instructions: string;
   prep: string;

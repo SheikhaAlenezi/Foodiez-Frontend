@@ -1,9 +1,12 @@
 import CustomizeButton from "@/components/customizeButton";
 import { router } from "expo-router";
 import LottieView from "lottie-react-native";
+import { useState } from "react";
 import { StyleSheet, View } from "react-native";
 
 export default function Index() {
+  const [isAuthenticated, setIsAuthenticated] = useState(true); //heree false
+
   const handlesigninButton = () => {
     router.dismissTo("/auth/signIn");
   };

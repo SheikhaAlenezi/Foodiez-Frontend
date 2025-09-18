@@ -1,24 +1,18 @@
 import React from "react";
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 interface Recipe {
   _id: string;
   title: string;
   description: string;
-  image?: string;
 }
 
 const RecipeCard = ({ recipe }: { recipe: Recipe }) => {
   return (
     <TouchableOpacity style={styles.card}>
-      {recipe.image && (
-        <Image source={{ uri: recipe.image }} style={styles.image} />
-      )}
       <View style={styles.info}>
         <Text style={styles.title}>{recipe.title}</Text>
-        <Text style={styles.desc} numberOfLines={2}>
-          {recipe.description}
-        </Text>
+        <Text>{recipe.description}</Text>
       </View>
     </TouchableOpacity>
   );
