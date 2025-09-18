@@ -28,7 +28,10 @@ export default function HomeScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <ScrollView
+        style={{ marginBottom: 50 }}
+        showsVerticalScrollIndicator={false}
+      >
         <View style={styles.searchContainer}>
           <TextInput
             style={styles.searchInput}
@@ -50,12 +53,6 @@ export default function HomeScreen() {
         {dataToShow?.map((r: any) => (
           <RecipeCard key={r._id} recipe={r} />
         ))}
-        {/* {recipes?.data?.map((r: any) => (
-          <TouchableOpacity key={r._id} style={styles.recipeCard}>
-            <Text style={styles.recipeTitle}>{r.title}</Text>
-            <Text style={styles.recipeDescription}>{r.instructions}</Text>
-          </TouchableOpacity>
-        ))} */}
       </ScrollView>
     </SafeAreaView>
   );
@@ -70,6 +67,7 @@ const styles = StyleSheet.create({
   searchContainer: {
     marginHorizontal: 20,
     marginBottom: 15,
+    marginTop: 20,
   },
   searchInput: {
     backgroundColor: "#fff",
