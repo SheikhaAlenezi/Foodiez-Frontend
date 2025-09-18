@@ -5,12 +5,12 @@ export const getAllIngredients = async () => {
   return res.data;
 };
 
-export const createIngredient = async (ingredient: {
+export const createIngredient = async (data: {
   names: string;
-  amount: string;
+  amount?: string;
   recipe?: string;
 }) => {
-  const res = await instance.post("/ingredient/createIngredient");
+  const res = await instance.post("/ingredient/createIngredient", data);
   return res.data;
 };
 
