@@ -77,7 +77,10 @@ const IngredientDropdown = ({
           style={styles.addButton}
           onPress={() => {
             if (!newIngredientName.trim()) return;
-            mutate({ names: newIngredientName.trim() });
+            mutate({
+              names: newIngredientName.trim(),
+              amount: "",
+            });
           }}
         >
           <Text style={styles.addButtonText}>Add</Text>

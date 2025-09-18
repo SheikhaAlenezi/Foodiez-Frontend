@@ -1,11 +1,13 @@
 import { getMyProfile } from "@/api/auth";
 import { deleteToken } from "@/api/storage";
+import AuthContext from "@/context/AuthContext";
 import { useQuery } from "@tanstack/react-query";
 import { router } from "expo-router";
+import { useContext } from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 export default function ProfileScreen() {
   // const { signout }= useContext(AuthContext);
-
+  const { setIsAuthenticated } = useContext(AuthContext);
   const handleSignout = async () => {
     await deleteToken();
     setIsAuthenticated(false);
@@ -100,6 +102,3 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
 });
-function setIsAuthenticated(arg0: boolean) {
-  throw new Error("Function not implemented.");
-}
