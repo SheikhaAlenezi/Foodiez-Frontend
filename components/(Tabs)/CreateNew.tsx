@@ -40,6 +40,8 @@ const CreateNewScreen = () => {
     mutationFn: createRecipe,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["categories"] });
+      queryClient.invalidateQueries({ queryKey: ["allRecipes"] });
+      queryClient.invalidateQueries({ queryKey: ["recipesByCategory"] });
       setSuccessMessage(true);
       setTimeout(() => setSuccessMessage(false), 2000);
     },
