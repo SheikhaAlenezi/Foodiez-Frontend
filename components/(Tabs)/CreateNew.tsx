@@ -17,6 +17,7 @@ import {
   TouchableWithoutFeedback,
   View,
 } from "react-native";
+import Toast from "react-native-toast-message";
 import CategoriesList from "../CategoriesList";
 import IngredientDropdown from "../Ingredient";
 
@@ -42,13 +43,21 @@ const CreateNewScreen = () => {
       queryClient.invalidateQueries({ queryKey: ["categories"] });
       queryClient.invalidateQueries({ queryKey: ["allRecipes"] });
       queryClient.invalidateQueries({ queryKey: ["recipesByCategory"] });
-      setSuccessMessage(true);
-      setTimeout(() => setSuccessMessage(false), 2000);
+      Toast.show({
+        type: "success",
+        text1: "category added",
+        text2: "your category was created successfully !",
+        position: "top",
+      });
     },
     onError: (err: any) => {
       const serverMessage = err.response?.data?.message;
-      setErrorMessage(serverMessage || "recipe already exists");
-      setTimeout(() => setErrorMessage(""), 2000);
+      Toast.show({
+        type: "error",
+        text1: " Error",
+        text2: serverMessage || "category already exists !",
+        position: "top",
+      });
     },
   });
 
@@ -72,6 +81,7 @@ const CreateNewScreen = () => {
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
+        <Toast />
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <View>
             <Text style={styles.title}>Create Recipe</Text>

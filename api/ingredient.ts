@@ -13,8 +13,3 @@ export const createIngredient = async (data: {
   const res = await instance.post("/ingredient/createIngredient", data);
   return res.data;
 };
-
-// export const createIngredient = async (payload: { names: string }) => {
-//   const res = await instance.post("/ingredient", payload);
-//   return res.data;
-// };

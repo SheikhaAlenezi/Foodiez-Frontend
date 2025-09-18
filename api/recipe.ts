@@ -10,7 +10,7 @@ export const createRecipe = async (data: {
   category: string;
   ingredients: SelectedIngredient[];
 }) => {
-  return await instance.post("recipe/createRecipe", data);
+  return await instance.post("/recipe/createRecipe", data);
 };
 
 export const getAllRecipe = async () => {

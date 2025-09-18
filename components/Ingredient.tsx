@@ -2,6 +2,7 @@ import { createIngredient } from "@/api/ingredient";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import React, { useState } from "react";
 import {
+  ScrollView,
   StyleSheet,
   Text,
   TextInput,
@@ -88,18 +89,24 @@ const IngredientDropdown = ({
       </View>
       {/* list of ingredient */}
       <Text style={styles.label}>Ingredients</Text>
-
-      <MultiSelect
-        style={styles.dropdown}
-        data={ingredients}
-        labelField="names"
-        valueField="_id"
-        placeholder="Select ingredients"
-        search
-        searchPlaceholder="Search..."
-        value={selected.map((s) => s._id)}
-        onChange={handleChange}
-      />
+      <ScrollView
+        keyboardShouldPersistTaps="handled"
+        nestedScrollEnabled={true}
+        showsVerticalScrollIndicator={false}
+      >
+        <MultiSelect
+          style={styles.dropdown}
+          data={ingredients}
+          labelField="names"
+          valueField="_id"
+          placeholder="Select ingredients"
+          search
+          searchPlaceholder="Search..."
+          value={selected.map((s) => s._id)}
+          onChange={handleChange}
+          dropdownPosition="bottom"
+        />
+      </ScrollView>
 
       {selected.map((item) => (
         <View key={item._id} style={styles.selectedItem}>
