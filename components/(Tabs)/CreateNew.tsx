@@ -240,12 +240,33 @@ const CreateNewScreen = () => {
                   {recipeInfo.instructions || "No instructions provided"}
                 </Text>
               </View>
+              {/* ingredients */}
+              <View style={styles.previewSection}>
+                <Text style={styles.sectionTitle}>Ingredients</Text>
+                {recipeInfo.ingredients.length > 0 ? (
+                  recipeInfo.ingredients.map((ing, index) => (
+                    <Text key={index} style={styles.sectionText}>
+                      • {ing.names} {ing.amount ? `- ${ing.amount}` : ""}
+                    </Text>
+                  ))
+                ) : (
+                  <Text style={styles.sectionText}>
+                    No Ingredients provided
+                  </Text>
+                )}
+              </View>
             </View>
 
             <TouchableOpacity
               style={[styles.button, styles.createButton]}
               onPress={() => {
-                mutation.mutate(recipeInfo);
+                mutation.mutate({
+                  ...recipeInfo,
+                  ingredients: recipeInfo.ingredients.map((ing) => ({
+                    ingredient: ing._id,
+                    amount: ing.amount || "",
+                  })) as any,
+                });
                 setShowPreview(false);
                 setRecipeInfo({
                   title: "",

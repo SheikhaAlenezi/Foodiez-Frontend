@@ -18,7 +18,7 @@ export default function ProfileScreen() {
     queryFn: getMyProfile,
   });
 
-  console.log("HEREEEE", data);
+  console.log("profile", data);
   if (isFetching) return <Text>Loading...</Text>;
 
   return (
